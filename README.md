@@ -18,7 +18,15 @@ The API which was used on this project is <a href="https://fakestoreapi.com/docs
 ```
 npm install
 ```
-
+## Setup Environment Variables
+.env
+```
+VUE_APP_CONTRACT_ADDRESS= ERC-721 Contract ADDRESS 
+VUE_APP_CLIENT_KEY=live-ex-API-KEY
+VUE_APP_CLIENT_SECRET=live-ex-API-SECRET
+VUE_APP_Web3HTTPSOCKETURL=
+VUE_APP_POLYGONSCANAPIKEY= 
+```
 ### Compiles and hot-reloads for development
 ```
 npm run serve

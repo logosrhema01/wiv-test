@@ -6,7 +6,7 @@
 export default {
   name: 'App',
   created(){
-    this.$store.dispatch('getTransactionsAction')
+    this.$store.dispatch('getProductsAction')
   }
 }
 </script>

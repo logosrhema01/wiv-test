@@ -1,9 +1,30 @@
 <template>
     <div class="container-md my-5">
         <div class="row">
+            <div class="col-xl-2 col-lg-3 col-md-4 col-sm-5">
+                <!-- Filter by categories -->
+                <select class="form-select py-2 shadow-sm text-capitalize mb-4" v-model="filterByCategory">
+                    <option value="">All Grapes</option>
+                    <option :value="product" v-for="product in eliminateDuplicatedCategories($store.state.products)" :key="product.id">
+                        {{product}}
+                    </option>
+                </select>
+                <!-- Sort by prices -->
+                <select class="form-select py-2 shadow-sm mb-4" v-model="sortByPrice" @change="sortProductsByPrice($store.state.products)">
+                    <option value="" disabled>Sort By Price</option>
+                    <option value="increasingOrder">Increasing Order</option>
+                    <option value="decreasingOrder">Decreasing Order</option>
+                </select>
+            </div>
             
             <div class="col-xl-10 col-lg-9 col-md-8 col-sm-7">
-               
+                <!-- Search Products -->
+                <div class="input-group mb-4 shadow-sm">
+                    <span class="input-group-text bg-white" id="basic-addon1">
+                        <i class="fas fa-search"></i>
+                    </span>
+                    <input type="text" class="form-control py-2" placeholder="Search for a product..." aria-label="Username" aria-describedby="basic-addon1" v-model="searchProduct">
+                </div>
                 <!-- Display Products -->
                 <div class="d-flex flex-wrap justify-content-sm-between justify-content-center">
                     <div class="card mb-4 shadow-sm" v-for="product in filterProducts" :key="product.id">
@@ -14,7 +35,7 @@
                             <div>
                                 <h4 class="card-title mb-3">{{formatProduct(product.title)}}</h4>
                                 <p class="my-2">
-                                    <span class="text-muted">Region: </span>
+                                    <span class="text-muted">Grape: </span>
                                     <span class="text-capitalize">
                                         {{product.category}}
                                     </span>
@@ -61,7 +82,7 @@ export default {
     },
     computed:{
         filterProducts(){
-            return this.$store.state.transactions.filter(product => {
+            return this.$store.state.products.filter(product => {
                 return product.title.toLowerCase().includes(this.searchProduct.toLowerCase()) &&
                        this.capitalized(product.category).includes(this.capitalized(this.filterByCategory))
             })

@@ -1,7 +1,7 @@
 <template>
     <Header />
     <div class="container-md mt-5">
-        <div v-for="product in $store.state.transactions" :key="product.id">
+        <div v-for="product in $store.state.products" :key="product.id">
             <div v-if="product.id == $route.params.id">
                 <div class="row">
                     <div class="col-md-5 col-sm-6 product-img border border-1 border-secondary bg-white rounded">
@@ -10,7 +10,7 @@
                     <div class="col-md-7 col-sm-6 fs-5 d-flex flex-column justify-content-between align-items-start mb-md-0 mb-5 px-4">
                         <div class="mt-4 mt-md-0">
                             <h2 class="mb-4">{{product.title}}</h2>
-                            <p class="my-2">Region: <span class="text-capitalize">{{product.category}}</span></p>
+                            <p class="my-2">Grape: <span class="text-capitalize">{{product.category}}</span></p>
                             <p class="my-2">
                                 Price:
                                 <span class="text-capitalize">

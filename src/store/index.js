@@ -1,23 +1,23 @@
 import { createStore } from 'vuex'
-import getTransactions from './get-transactions'
+import getProducts from './get-products'
 
 
 
 export default createStore({
   state: {
-    transactions: [],
+    products: [],
     card: []
   },
   mutations: {
-    getTransactions(state, transactions){
-      state.transactions = transactions
+    getProducts(state, products){
+      state.products = products
     }
   },
   actions: {
-    getTransactionsAction({commit}){
+    getProductsAction({commit}){
       
-      getTransactions().then(res => {
-        commit('getTransactions', res)
+      getProducts().then(res => {
+        commit('getProducts', res)
       })
     }
   },

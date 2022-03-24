@@ -64,7 +64,23 @@
                         </div>
                     </div>
                 </div>
-            </div>
+	        <div class="d-flex justify-content-center">
+		<nav aria-label="Products Pagination">
+		    <ul class="pagination">
+			<li class="page-item">
+			    <button type="button" class="page-link" v-if="page != 1" @click="page--"> Previous </button>
+			</li>
+			<li class="page-item" v-for="pageNumber in pages.slice(page-1, page+5)">
+			    <button type="button" class="btn btn-primary" v-if="page === pageNumber" disabled> {{pageNumber}} </button>
+			    <button type="button" class="page-link" v-else @click="page=pageNumber"> {{pageNumber}} </button>
+			</li>
+			<li class="page-item">
+			    <button type="button" @click="page++" v-if="page < pages.length" class="page-link"> Next </button>
+			</li>
+		    </ul>
+		</nav>	
+	   </div>
+	</div>
         </div>
     </div>
 </template>
@@ -77,18 +93,40 @@ export default {
             searchProduct: '',
             filterByCategory: '',
             sortByPrice: '',
+	    page: 1,
+	    pages: [],
+	    perPage: 10,
+	    products: [],
             sortByRating: ''
         }
     },
+    watch: { 
+	filterProducts(){
+		this.setPages()
+	}
+    },
     computed:{
         filterProducts(){
-            return this.$store.state.products.filter(product => {
+            return this.paginate(this.$store.state.products.filter(product => {
                 return product.title.toLowerCase().includes(this.searchProduct.toLowerCase()) &&
                        this.capitalized(product.category).includes(this.capitalized(this.filterByCategory))
-            })
+            }))
         }
     },
     methods:{
+	setPages(){
+		let numberOfPages = Math.ceil(this.$store.state.products.length / this.perPage);
+		for (let index = 1; index <= numberOfPages; index++) {
+			this.pages.push(index);
+		}
+	},
+	paginate (products) {
+		let page = this.page;
+		let perPage = this.perPage;
+		let from = (page * perPage) - perPage;
+		let to = (page * perPage);
+		return  products.slice(from, to);
+	},
         formatProduct(product){
             if(product){
                 return product.slice(0,15) + '...'

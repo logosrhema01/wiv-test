@@ -75,5 +75,6 @@ export default async function getProducts () {
     })
   )
   return res.filter(r=> r != undefined)
+  
 }
 
